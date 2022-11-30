@@ -1,29 +1,41 @@
 
 
-### login
-# @name auth
-POST http://localhost:3000/auth/local HTTP/1.1
+# ### login
+# # @name auth
+# POST http://localhost:3000/auth/local HTTP/1.1
+# content-type: application/json
+
+# { "username": "user11",
+# "password" : "password1"}
+
+
+# ###
+# ### POST Request for a book with just a title
+# ## expeted result 201 Created with the id of the book in location and a book returned.
+# POST http://localhost:3000/books HTTP/1.1
+# content-type: application/json
+# Authorization: Bearer {{auth.response.body.$.Data.accesstoken}}
+
+# { "title" : "a new book"}
+
+### @name loginusingAuth0
+POST https://dev-vpz6bi6373xqg51z.us.auth0.com/oauth/token
 content-type: application/json
 
-{ "username": "use4",
-"password" : "password1"}
+{"client_id":"WpNr06BhHum5afZg94hKVOmXciIlBgKw",
+"client_secret":"f5KMEYYaGr6KY3aSv0lQjcgttXT9QNpAw6IZpz1R4zM8zw37qxw-sZyq63_dEMB2",
+"audience":"books","grant_type":"client_credentials"}
 
+###
+GET http://localhost:3000/books
+Authorization: Bearer {{loginusingAuth0.response.body.access_token}}
 
 ###
 ### POST Request for a book with just a title
 ## expeted result 201 Created with the id of the book in location and a book returned.
 POST http://localhost:3000/books HTTP/1.1
 content-type: application/json
-Authorization: Bearer {{auth.response.body.$.Data.accesstoken}}
-
-{ "title" : "a new book"}
-
-###
-### POST Request for a book with just a title
-## expeted result 201 Created with the id of the book in location and a book returned.
-POST http://localhost:3000/books HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlNCIsImlhdCI6MTY2NjYyMDQyMywiZXhwIjoxNjY2NjIwNzIzfQ._kyJxB9f7bwCsDmkDWOpFOgAsZM8pJuf5pw7sVVbXv0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjExIiwiaWF0IjoxNjY2NjI3ODIwLCJleHAiOjE2NjY2MjgxMjB9.dBxtd_hdCYOQ11mWh3ffxWt83gVNxF-_8mXzkwAUR8Q
 
 { "title" : "a new book"}
 

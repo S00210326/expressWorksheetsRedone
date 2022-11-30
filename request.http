@@ -2,7 +2,7 @@
 POST http://localhost:3000/users HTTP/1.1
 content-type: application/json
 
-{ "username": "user10",
+{ "username": "user11",
 "email" : "una@here.ie",
 "password" : "password1"}
 
@@ -11,12 +11,23 @@ content-type: application/json
 POST http://localhost:3000/auth/local HTTP/1.1
 content-type: application/json
 
-{ "username": "use4",
+{ "username": "user11",
 "password" : "password1"}
 
 ###
 GET http://localhost:3000/users HTTP/1.1
 
+### @name loginusingAuth0
+POST https://dev-vpz6bi6373xqg51z.us.auth0.com/oauth/token
+content-type: application/json
+
+{"client_id":"WpNr06BhHum5afZg94hKVOmXciIlBgKw",
+"client_secret":"f5KMEYYaGr6KY3aSv0lQjcgttXT9QNpAw6IZpz1R4zM8zw37qxw-sZyq63_dEMB2",
+"audience":"books","grant_type":"client_credentials"}
+
+###
+GET http://localhost:3000/books
+Authorization: Bearer {{loginusingAuth0.response.body.access_token}}
 
 
 ###
@@ -37,7 +48,7 @@ GET http://localhost:3000/books?title=war HTTP/1.1
 ###
 # returns a collection of those books with year_written = 2022
 
-GET http://localhost:3000/books?year=2022 HTTP/1.1
+GET http://localhost:3000/books?year=1814 HTTP/1.1
 
 ########################
 ###GET an individual book
